@@ -17,6 +17,16 @@ public class Main {
             new Garen(1)
         );
 
+        System.out.println("TEAM0 ===========");
+        for (Hero hero : team0) {
+            System.out.println(hero);
+        }
+
+        System.out.println("TEAM1 ===========");
+        for (Hero hero : team1) {
+            System.out.println(hero);
+        }
+
         System.out.println("==== 소환사의 협곡에 오신 것을 환영합니다.       ====");
         System.out.println("==== 전투 시작                                   ====");
         System.out.println("==== (전투는 한팀이 전멸 할때 까지 진행 됩니다.) ====");
@@ -25,7 +35,13 @@ public class Main {
         Game game = new Game(team0, team1);
 
         while (true) {
+            System.out.println("");
+            System.out.println("턴 시작 ===========");
+            System.out.println("");
             game.doTurn();
+            System.out.println("");
+            System.out.println("턴 종료 ===========");
+            System.out.println("");
 
             if (game.getLiveHeroesCount(0) == 0) {
                 System.out.println("팀 1 승리");

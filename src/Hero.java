@@ -108,7 +108,7 @@ public abstract class Hero {
     public abstract BaseStat onLevelUp(int prevLevel, int nextLevel, BaseStat prevStat);
 
     public void doAttack(Hero otherHero) {
-        System.out.printf("%s:%s -> %s:%s 기본 공격!\n", 
+        System.out.printf("팀%s:%s -> 팀%s:%s 기본 공격!\n", 
                 this.team, this.name, otherHero.team, otherHero.name);
 
         otherHero.takeDamage(this.baseStat.attackDamage);
