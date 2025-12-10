@@ -17,6 +17,11 @@ public class Main {
             new Garen(1)
         );
 
+        System.out.println("==== 소환사의 협곡에 오신 것을 환영합니다.       ====");
+        System.out.println("==== 전투 시작                                   ====");
+        System.out.println("==== (전투는 한팀이 전멸 할때 까지 진행 됩니다.) ====");
+        System.out.println();
+
         Game game = new Game(team0, team1);
 
         while (true) {
@@ -32,6 +37,9 @@ public class Main {
                 break;
             }
         }
+
+        System.out.println("=== 전투 종료 ===");
+        System.out.println("=== 전투 결과 ===");
 
         System.out.println("TEAM0 ===========");
         for (Hero hero : team0) {
