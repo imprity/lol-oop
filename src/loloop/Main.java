@@ -1,3 +1,8 @@
+package loloop;
+
+import loloop.heroes.Garen;
+import loloop.heroes.Ashe;
+
 import java.util.List;
 import java.util.Arrays;
 

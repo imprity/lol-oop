@@ -1,6 +1,12 @@
+package loloop.heroes;
+
+import loloop.Game;
+import loloop.Hero;
+import loloop.Team;
+
 import java.util.Optional;
 
-class Ashe extends Hero{
+public class Ashe extends Hero{
     public Ashe(
         Team team,
         String name

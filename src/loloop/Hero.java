@@ -1,3 +1,5 @@
+package loloop;
+
 public abstract class Hero {
     public static class BaseStat {
         public final int maxHealth;

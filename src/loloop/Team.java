@@ -1,3 +1,5 @@
+package loloop;
+
 public enum Team {
     RED("빨강"),
     BLUE("파랑");

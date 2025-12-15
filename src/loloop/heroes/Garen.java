@@ -1,6 +1,12 @@
+package loloop.heroes;
+
+import loloop.Game;
+import loloop.Hero;
+import loloop.Team;
+
 import java.util.List;
 
-class Garen extends Hero{
+public class Garen extends Hero{
     public Garen(
         Team team,
         String name
