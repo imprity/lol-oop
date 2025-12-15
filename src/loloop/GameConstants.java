@@ -13,10 +13,10 @@ public class GameConstants {
     private static final HashMap<Class<? extends Hero>, Hero.Stat> heroBaseStat = new HashMap<>();
 
     static {
-        heroBaseStat.put(Garen.class, new Hero.Stat(100, 2, 5));
-        heroBaseStat.put(Ashe.class, new Hero.Stat(200, 2, 5));
-        heroBaseStat.put(Mario.class, new Hero.Stat(150, 7, 10));
-        heroBaseStat.put(Sanic.class, new Hero.Stat(60, 10, 1));
+        heroBaseStat.put(Garen.class, new Hero.Stat(100, 2, 10));
+        heroBaseStat.put(Ashe.class, new Hero.Stat(200, 2, 10));
+        heroBaseStat.put(Mario.class, new Hero.Stat(150, 5, 10));
+        heroBaseStat.put(Sanic.class, new Hero.Stat(60, 9, 10));
     }
 
     public static Hero.Stat getBaseStat(Class<? extends Hero> heroClass) {

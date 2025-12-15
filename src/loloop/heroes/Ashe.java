@@ -1,6 +1,8 @@
 package loloop.heroes;
 
 import loloop.Game;
+import loloop.GameConstants;
+import loloop.Util;
 import loloop.Hero;
 import loloop.Team;
 
@@ -20,11 +22,12 @@ public class Ashe extends Hero {
 
     @Override
     public Stat onLevelUp(int prevLevel, int nextLevel, Stat prevStat) {
-        int diff = nextLevel - prevLevel;
+        Hero.Stat baseStat = GameConstants.getBaseStat(this.getClass());
+
         return new Hero.Stat(
-            prevStat.maxHealth + diff * 10,
-            prevStat.defense + diff * 10,
-            prevStat.attackDamage + diff * 3
+            baseStat.maxHealth + nextLevel * 10,
+            baseStat.defense + Util.divideCeil(nextLevel, 2),
+            baseStat.attackDamage + nextLevel * 5
         );
     }
 

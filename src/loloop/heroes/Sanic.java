@@ -1,6 +1,7 @@
 package loloop.heroes;
 
 import loloop.Game;
+import loloop.GameConstants;
 import loloop.Hero;
 import loloop.Team;
 
@@ -22,11 +23,12 @@ public class Sanic extends Hero {
 
     @Override
     public Stat onLevelUp(int prevLevel, int nextLevel, Stat prevStat) {
-        int diff = nextLevel - prevLevel;
+        Hero.Stat baseStat = GameConstants.getBaseStat(this.getClass());
+
         return new Hero.Stat(
-            prevStat.maxHealth + diff * 1,
-            prevStat.defense + diff * 1,
-            prevStat.attackDamage + diff * 1
+            baseStat.maxHealth + nextLevel * 1,
+            baseStat.defense + nextLevel,
+            baseStat.attackDamage + nextLevel * 2
         );
     }
 

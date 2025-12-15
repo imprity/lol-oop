@@ -1,7 +1,7 @@
 package loloop;
 
 public class Util {
-    public static int divideCeiling(int a, int b) {
+    public static int divideCeil(int a, int b) {
         double r = (double) (a) / (double) (b);
 
         r = Math.ceil(r);

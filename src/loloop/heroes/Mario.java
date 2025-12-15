@@ -5,6 +5,7 @@ import java.util.Optional;
 import loloop.Util;
 
 import loloop.Game;
+import loloop.GameConstants;
 import loloop.Hero;
 import loloop.Team;
 
@@ -22,11 +23,12 @@ public class Mario extends Hero {
 
     @Override
     public Stat onLevelUp(int prevLevel, int nextLevel, Stat prevStat) {
-        int diff = nextLevel - prevLevel;
+        Hero.Stat baseStat = GameConstants.getBaseStat(this.getClass());
+
         return new Hero.Stat(
-            prevStat.maxHealth + diff * 20,
-            prevStat.defense + diff * 20,
-            prevStat.attackDamage + diff * 20
+            baseStat.maxHealth + nextLevel * 10,
+            baseStat.defense + Util.divideCeil(nextLevel, 3),
+            baseStat.attackDamage + nextLevel * 10
         );
     }
 
@@ -38,7 +40,7 @@ public class Mario extends Hero {
         if (enemy.isPresent()) {
             System.out.printf("%s(이)가 %s를(을) 향해 낙하합니다!!\n",
                 this.teamAndName(), enemy.get().teamAndName());
-            enemy.get().takeDamage(Util.divideCeiling(enemy.get().getHealth(), 4));
+            enemy.get().takeDamage(Util.divideCeil(enemy.get().getHealth(), 4));
         }
     }
 }

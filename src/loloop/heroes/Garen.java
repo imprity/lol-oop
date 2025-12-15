@@ -1,8 +1,10 @@
 package loloop.heroes;
 
 import loloop.Game;
+import loloop.GameConstants;
 import loloop.Hero;
 import loloop.Team;
+import loloop.Util;
 
 import java.util.List;
 
@@ -20,11 +22,12 @@ public class Garen extends Hero {
 
     @Override
     public Stat onLevelUp(int prevLevel, int nextLevel, Stat prevStat) {
-        int diff = nextLevel - prevLevel;
+        Hero.Stat baseStat = GameConstants.getBaseStat(this.getClass());
+
         return new Hero.Stat(
-            prevStat.maxHealth + diff * 5,
-            prevStat.defense + diff * 5,
-            prevStat.attackDamage + diff * 10
+            baseStat.maxHealth + nextLevel * 5,
+            baseStat.defense + Util.divideCeil(nextLevel, 3),
+            baseStat.attackDamage + nextLevel * 10
         );
     }
 
