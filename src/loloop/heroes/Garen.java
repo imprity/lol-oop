@@ -25,7 +25,7 @@ public class Garen extends Hero{
         return new Hero.BaseStat(
                 prevStat.maxHealth + diff * 5,
                 prevStat.defense + diff * 5,
-                prevStat.attackDamage + diff * 5
+                prevStat.attackDamage + diff * 10
         );
     }
 

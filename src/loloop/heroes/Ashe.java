@@ -23,9 +23,9 @@ public class Ashe extends Hero{
     public BaseStat onLevelUp(int prevLevel, int nextLevel, BaseStat prevStat) {
         int diff = nextLevel - prevLevel;
         return new Hero.BaseStat(
-                prevStat.maxHealth + diff * 5,
-                prevStat.defense + diff * 5,
-                prevStat.attackDamage + diff * 5
+                prevStat.maxHealth + diff * 10,
+                prevStat.defense + diff * 10,
+                prevStat.attackDamage + diff * 3
         );
     }
 
