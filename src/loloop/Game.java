@@ -95,6 +95,8 @@ public class Game {
                 continue;
             }
 
+            hero.increaseBattleCounter();
+
             if (rng.nextInt(100) < 70) {
                 // 기본 공격 실행
                 Team otherTeam = Team.RED;

@@ -27,6 +27,9 @@ public abstract class Hero {
         }
     }
 
+    private static int battleCounterGlobal = 0;
+    private int battleCounter = 0;
+
     private Stat stat;
     private int health;
 
@@ -125,14 +128,28 @@ public abstract class Hero {
 
     public abstract void doQImpl(Game game);
 
+    public void increaseBattleCounter() {
+        battleCounterGlobal += 1;
+        battleCounter += 1;
+    }
+
+    public int getBattleCount() {
+        return this.battleCounter;
+    }
+
+    public static int getGlobalBattleCount() {
+        return battleCounterGlobal;
+    }
+
     @Override
     public String toString() {
         return String.format(
-            "팀:%s, 이름: %s, 체력:%s, level:%s, %s",
+            "팀:%s, 이름: %s, 체력:%s, level:%s, 배틀횟수: %s, %s",
             this.team,
             this.name,
             this.health,
             this.level,
+            this.battleCounter,
             this.isDead() ? "죽음" : "살아있음"
         );
     }

@@ -69,6 +69,8 @@ public class Main {
 
         printTeamStat(Team.RED, redTeam);
         printTeamStat(Team.BLUE, blueTeam);
+
+        System.out.printf("\n총 배틀 횟수 : %s\n", Hero.getGlobalBattleCount());
     }
 
     private static void printTeamStat(Team team, List<Hero> teamHeroes) {
