@@ -128,6 +128,22 @@ public abstract class Hero {
 
     public abstract void doQImpl(Game game);
 
+    public final void resurrect() {
+        if (!this.isDead) {
+            System.err.printf("ERROR: %s이(가) 살아있는은 상태에서 resurrect를 받앗습니다!\n",
+                this.teamAndName());
+            return;
+        }
+
+        System.out.printf("%s이(가) 부활했습니다!\n", this.teamAndName());
+
+        this.isDead = !this.isDead;
+        this.health = Util.divideCeil(this.stat.maxHealth, 10);
+        if (this.health <= 0) {
+            this.health = 1;
+        }
+    }
+
     public void increaseBattleCounter() {
         battleCounterGlobal += 1;
         battleCounter += 1;

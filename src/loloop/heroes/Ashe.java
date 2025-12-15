@@ -44,5 +44,10 @@ public class Ashe extends Hero {
         if (friend.isPresent()) {
             friend.get().getHealed(10);
         }
+
+        friend = game.pickRandomDeadHero(myTeam);
+        if (friend.isPresent()) {
+            friend.get().resurrect();
+        }
     }
 }

@@ -30,39 +30,57 @@ public class Game {
         return heroes.stream().filter(x -> !x.isDead()).collect(Collectors.toList());
     }
 
-    public Optional<Hero> pickRandomLiveHero(Team team) {
+    private Optional<Hero> pickRandomLiveOrDeadHero(Team team, boolean pickAlive) {
         List<Hero> heroes = redTeam;
         if (team == Team.BLUE) {
             heroes = this.blueTeam;
         }
 
-        int liveHeroes = 0;
+        int pickedHeroes = 0;
 
         for (final Hero hero : heroes) {
-            if (!hero.isDead()) {
-                liveHeroes += 1;
+            boolean pickable = hero.isDead();
+            if (pickAlive) {
+                pickable = !pickable;
+            }
+
+            if (pickable) {
+                pickedHeroes += 1;
             }
         }
 
-        if (liveHeroes <= 0) {
+        if (pickedHeroes <= 0) {
             return Optional.empty();
         }
 
-        int liveIndex = rng.nextInt(liveHeroes);
+        int pickIndex = rng.nextInt(pickedHeroes);
 
         for (final Hero hero : heroes) {
-            if (liveIndex == 0 && !hero.isDead()) {
+            boolean pickable = hero.isDead();
+            if (pickAlive) {
+                pickable = !pickable;
+            }
+
+            if (pickIndex == 0 && pickable) {
                 return Optional.of(hero);
             }
 
-            if (!hero.isDead()) {
-                liveIndex--;
+            if (pickable) {
+                pickIndex--;
             }
         }
 
         assert false; // SHOULD NEVER HAPPEN
 
         return Optional.ofNullable(null);
+    }
+
+    public Optional<Hero> pickRandomLiveHero(Team team) {
+        return pickRandomLiveOrDeadHero(team, true);
+    }
+
+    public Optional<Hero> pickRandomDeadHero(Team team) {
+        return pickRandomLiveOrDeadHero(team, false);
     }
 
     public int getLiveHeroesCount(Team team) {
