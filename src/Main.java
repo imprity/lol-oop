@@ -3,67 +3,70 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        List<Hero> team0 = Arrays.asList(
-            new Garen(0),
-            new Ashe(0),
-            new Ashe(0),
-            new Ashe(0)
+        // ===============
+        // hero 생성
+        // ===============
+        List<Hero> redTeam = Arrays.asList(
+            new Garen(Team.RED, "잘생긴 가렌"),
+            new Ashe(Team.RED, "잘생긴 애쉬1"),
+            new Ashe(Team.RED, "잘생긴 애쉬2"),
+            new Ashe(Team.RED, "잘생긴 애쉬3")
         );
 
-        List<Hero> team1 = Arrays.asList(
-            new Ashe(1),
-            new Garen(1),
-            new Garen(1),
-            new Garen(1)
+        List<Hero> blueTeam = Arrays.asList(
+            new Ashe(Team.BLUE, "귀요미 애쉬"),
+            new Garen(Team.BLUE, "귀요미 가렌1"),
+            new Garen(Team.BLUE, "귀요미 가렌2"),
+            new Garen(Team.BLUE, "귀요미 가렌3")
         );
 
-        System.out.println("TEAM0 ===========");
-        for (Hero hero : team0) {
-            System.out.println(hero);
-        }
+        printTeamStat(Team.RED, redTeam);
+        printTeamStat(Team.BLUE, blueTeam);
 
-        System.out.println("TEAM1 ===========");
-        for (Hero hero : team1) {
-            System.out.println(hero);
-        }
-
-        System.out.println("==== 소환사의 협곡에 오신 것을 환영합니다.       ====");
-        System.out.println("==== 전투 시작                                   ====");
-        System.out.println("==== (전투는 한팀이 전멸 할때 까지 진행 됩니다.) ====");
+        // =====================
+        // 배너 출력
+        // =====================
+        System.out.println();
+        System.out.println("======================================================");
+        System.out.println("======== 소환사의 협곡에 오신 것을 환영합니다 ========");
+        System.out.println("====================== 전투시작 ======================");
+        System.out.println("======================================================");
+        System.out.println("==== (전투는 한팀이 전멸 할때 까지 진행 됩니다.)  ====");
+        System.out.println("======================================================");
         System.out.println();
 
-        Game game = new Game(team0, team1);
+        Game game = new Game(redTeam, blueTeam);
 
         while (true) {
-            System.out.println("");
-            System.out.println("턴 시작 ===========");
-            System.out.println("");
+            System.out.println();
+            System.out.println("====================== 턴 시작 =======================");
+            System.out.println();
             game.doTurn();
-            System.out.println("");
-            System.out.println("턴 종료 ===========");
-            System.out.println("");
+            System.out.println();
+            System.out.println("====================== 턴 종료 =======================");
+            System.out.println();
 
-            if (game.getLiveHeroesCount(0) == 0) {
-                System.out.println("팀 1 승리");
+            if (game.getLiveHeroesCount(Team.RED) == 0) {
+                System.out.printf("%s 팀 승리\n", Team.BLUE);
                 break;
             }
 
-            if (game.getLiveHeroesCount(1) == 0) {
-                System.out.println("팀 0 승리");
+            if (game.getLiveHeroesCount(Team.BLUE) == 0) {
+                System.out.printf("%s 팀 승리\n", Team.RED);
                 break;
             }
         }
 
-        System.out.println("=== 전투 종료 ===");
-        System.out.println("=== 전투 결과 ===");
+        System.out.println("[ 전투 종료 ]");
+        System.out.println("[ 전투 결과 ]");
 
-        System.out.println("TEAM0 ===========");
-        for (Hero hero : team0) {
-            System.out.println(hero);
-        }
+        printTeamStat(Team.RED, redTeam);
+        printTeamStat(Team.BLUE, blueTeam);
+    }
 
-        System.out.println("TEAM1 ===========");
-        for (Hero hero : team1) {
+    private static void printTeamStat(Team team, List<Hero> teamHeroes) {
+        System.out.printf("\n[ %s팀 ]\n\n", team);
+        for (Hero hero : teamHeroes) {
             System.out.println(hero);
         }
     }

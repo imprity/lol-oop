@@ -1,12 +1,12 @@
-import java.util.List;
 import java.util.Optional;
 
 class Ashe extends Hero{
     public Ashe(
-        int team
+        Team team,
+        String name
     ) {
         super(
-            "애쉬",
+            name,
             team,
             new Hero.BaseStat(200, 2, 5),
             "어머, 죽었넹"
@@ -26,9 +26,9 @@ class Ashe extends Hero{
     @Override
     public void doQImpl(Game game) {
         System.out.println("힐링 타임!!");
-        int myTeam = 0;
-        if (myTeam  != team) {
-            myTeam = 1;
+        Team myTeam = Team.RED;
+        if (myTeam != team) {
+            myTeam = Team.BLUE;
         }
 
         Optional<Hero> friend = game.pickRandomLiveHero(myTeam);

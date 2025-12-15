@@ -25,14 +25,12 @@ public abstract class Hero {
         }
     }
 
-    private static BaseStat DEFAULT_STAT = new BaseStat(100, 10, 20);
-
-    private BaseStat baseStat = DEFAULT_STAT;
-    private int health = 100;
+    private BaseStat baseStat = GameConstants.DEFAULT_STAT;
+    private int health;
 
     private final String name;
 
-    public final int team;
+    public final Team team;
 
     private final String lastWords;
 
@@ -42,7 +40,7 @@ public abstract class Hero {
 
     protected Hero(
         String name, 
-        int team, 
+        Team team, 
         BaseStat baseStat, 
         String lastWords
     ) {
@@ -50,12 +48,13 @@ public abstract class Hero {
         this.team = team;
         this.baseStat = baseStat;
         this.lastWords = lastWords;
+        this.health = baseStat.maxHealth;
     }
 
     public void takeDamage(int damage) {
         if (this.isDead) {
-            System.err.printf("ERROR: 팀%s, %s가 죽은 상태에서 damage를 받앗습니다!\n",
-                    this.team, this.name);
+            System.err.printf("ERROR: %s이(가) 죽은 상태에서 damage를 받앗습니다!\n",
+                    this.teamAndName());
             return;
         }
 
@@ -65,11 +64,11 @@ public abstract class Hero {
             return;
         }
 
-        System.out.printf("팀%s:%s이(가) %s dmg를 받음!\n", this.team, this.name, damage);
+        System.out.printf("%s이(가) %s dmg를 받음!\n", this.teamAndName(), damage);
         this.health -= damage;
 
         if (this.health <= 0) {
-            System.out.printf("팀%s:%s, 사망 - \"%s\"\n", this.team, this.name, this.lastWords);
+            System.out.printf("%s이(가) 사망 - \"%s\"\n", this.teamAndName(), this.lastWords);
             this.health = 0;
             isDead = true;
         }
@@ -77,12 +76,12 @@ public abstract class Hero {
 
     public void getHealed(int healing) {
         if (this.isDead) {
-            System.err.printf("ERROR: 팀%s, %s가 죽은 상태에서 healing을 받앗습니다!\n",
-                    this.team, this.name);
+            System.err.printf("ERROR: %s이(가) 죽은 상태에서 healing을 받앗습니다!\n",
+                    this.teamAndName());
             return;
         }
 
-        System.out.printf("팀%s:%s이(가) %s 힐링을 받음!\n", this.team, this.name, healing);
+        System.out.printf("%s이(가) %s 힐링을 받음!\n", this.teamAndName(), healing);
         this.health += healing;
 
         if (this.health > this.baseStat.maxHealth) {
@@ -108,14 +107,14 @@ public abstract class Hero {
     public abstract BaseStat onLevelUp(int prevLevel, int nextLevel, BaseStat prevStat);
 
     public void doAttack(Hero otherHero) {
-        System.out.printf("팀%s:%s -> 팀%s:%s 기본 공격!\n", 
-                this.team, this.name, otherHero.team, otherHero.name);
+        System.out.printf("%s -> %s 기본 공격!\n", 
+                this.teamAndName(), otherHero.teamAndName());
 
         otherHero.takeDamage(this.baseStat.attackDamage);
     }
 
-    public void doQ(Game game) {
-        System.out.printf("팀%s:%s이(가) Q를 시전\n", this.team, this.name);
+    public final void doQ(Game game) {
+        System.out.printf("%s이(가) Q를 시전\n", this.teamAndName());
         doQImpl(game);
     }
 
@@ -123,7 +122,18 @@ public abstract class Hero {
 
     @Override
     public String toString() {
-        return String.format("팀:%s, 이름: %s, 체력:%s, level:%s, %s", this.team, this.name, this.health, this.level, this.isDead() ? "죽음" : "살아있음");
+        return String.format(
+            "팀:%s, 이름: %s, 체력:%s, level:%s, %s", 
+            this.team, 
+            this.name, 
+            this.health, 
+            this.level, 
+            this.isDead() ? "죽음" : "살아있음"
+        );
+    }
+
+    public String teamAndName() {
+        return String.format("%s팀 %s", this.team, this.name);
     }
 }
 

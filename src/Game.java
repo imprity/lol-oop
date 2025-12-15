@@ -5,33 +5,33 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.Collections;
 
-class Game {
-    private Random rng = new Random();
+public class Game {
+    private final Random rng = new Random();
 
-    private List<Hero> team0;
-    private List<Hero> team1;
+    private final List<Hero> redTeam;
+    private final List<Hero> blueTeam;
 
     public Game(
-        List<Hero> team0,
-        List<Hero> team1
+        List<Hero> redTeam,
+        List<Hero> blueTeam
     ) {
-        this.team0 = team0;
-        this.team1 = team1;
+        this.redTeam = redTeam;
+        this.blueTeam = blueTeam;
     }
 
-    public List<Hero> getLiveHeroes(int team) { 
-        List<Hero> heroes = team0;
-        if (team == 1) {
-            heroes = this.team1;
+    public List<Hero> getLiveHeroes(Team team) { 
+        List<Hero> heroes = redTeam;
+        if (team == Team.BLUE) {
+            heroes = this.blueTeam;
         }
 
         return heroes.stream().filter(x -> !x.isDead()).collect(Collectors.toList());
     }
 
-    public Optional<Hero> pickRandomLiveHero(int team) {
-        List<Hero> heroes = team0;
-        if (team == 1) {
-            heroes = this.team1;
+    public Optional<Hero> pickRandomLiveHero(Team team) {
+        List<Hero> heroes = redTeam;
+        if (team == Team.BLUE) {
+            heroes = this.blueTeam;
         }
 
         int liveHeroes = 0;
@@ -43,7 +43,7 @@ class Game {
         }
 
         if (liveHeroes <= 0) {
-            return Optional.ofNullable(null);
+            return Optional.empty();
         }
 
         int liveIndex = rng.nextInt(liveHeroes);
@@ -63,10 +63,10 @@ class Game {
         return Optional.ofNullable(null);
     }
 
-    public int getLiveHeroesCount(int team) {
-        List<Hero> heroes = team0;
-        if (team == 1) {
-            heroes = this.team1;
+    public int getLiveHeroesCount(Team team) {
+        List<Hero> heroes = redTeam;
+        if (team == Team.BLUE) {
+            heroes = this.blueTeam;
         }
 
         int count = 0;
@@ -83,12 +83,8 @@ class Game {
     public void doTurn() {
         List<Hero> heroes = new ArrayList<>();
 
-        for (final Hero hero : team0) {
-            heroes.add(hero);
-        }
-        for (final Hero hero : team1) {
-            heroes.add(hero);
-        }
+        heroes.addAll(redTeam);
+        heroes.addAll(blueTeam);
 
         Collections.shuffle(heroes);
 
@@ -99,9 +95,9 @@ class Game {
 
             if (rng.nextInt(100) < 70) {
                 // 기본 공격 실행
-                int otherTeam = 0;
+                Team otherTeam = Team.RED;
                 if (otherTeam == hero.team) {
-                    otherTeam = 1;
+                    otherTeam = Team.BLUE;
                 }
 
                 Optional<Hero> otherHero = pickRandomLiveHero(otherTeam);

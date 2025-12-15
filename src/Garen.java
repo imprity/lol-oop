@@ -2,10 +2,11 @@ import java.util.List;
 
 class Garen extends Hero{
     public Garen(
-        int team
+        Team team,
+        String name
     ) {
         super(
-            "가렌",
+            name,
             team,
             new Hero.BaseStat(100, 2, 5),
             "으악 죽었다"
@@ -25,10 +26,7 @@ class Garen extends Hero{
     @Override
     public void doQImpl(Game game) {
         System.out.println("소용돌이 빔!!");
-        int otherTeam = 0;
-        if (otherTeam == team) {
-            otherTeam = 1;
-        }
+        Team otherTeam = this.team.getOtherTeam();
 
         List<Hero> otherTeamHeroes = game.getLiveHeroes(otherTeam);
 
