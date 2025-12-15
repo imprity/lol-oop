@@ -14,7 +14,6 @@ public class Garen extends Hero{
         super(
             name,
             team,
-            new Hero.BaseStat(100, 2, 5),
             "으악 죽었다"
         );
     }

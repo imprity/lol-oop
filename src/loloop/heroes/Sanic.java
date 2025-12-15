@@ -16,7 +16,6 @@ public class Sanic extends Hero{
         super(
             name,
             team,
-            new Hero.BaseStat(60, 10, 1),
             "GOTTA GO FAST!!"
         );
     }

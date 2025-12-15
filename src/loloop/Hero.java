@@ -27,7 +27,7 @@ public abstract class Hero {
         }
     }
 
-    private BaseStat baseStat = GameConstants.DEFAULT_STAT;
+    private BaseStat baseStat;
     private int health;
 
     private final String name;
@@ -43,12 +43,11 @@ public abstract class Hero {
     protected Hero(
         String name, 
         Team team, 
-        BaseStat baseStat, 
         String lastWords
     ) {
         this.name = name;
         this.team = team;
-        this.baseStat = baseStat;
+        this.baseStat = GameConstants.getBaseStat(this.getClass());
         this.lastWords = lastWords;
         this.health = baseStat.maxHealth;
     }

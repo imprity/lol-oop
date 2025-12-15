@@ -14,7 +14,6 @@ public class Ashe extends Hero{
         super(
             name,
             team,
-            new Hero.BaseStat(200, 2, 5),
             "어머, 죽었넹"
         );
     }
