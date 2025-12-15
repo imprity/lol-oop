@@ -21,7 +21,7 @@ public class Game {
         this.blueTeam = blueTeam;
     }
 
-    public List<Hero> getLiveHeroes(Team team) { 
+    public List<Hero> getLiveHeroes(Team team) {
         List<Hero> heroes = redTeam;
         if (team == Team.BLUE) {
             heroes = this.blueTeam;
@@ -75,10 +75,10 @@ public class Game {
 
         for (Hero hero : heroes) {
             if (!hero.isDead()) {
-                count ++;
+                count++;
             }
         }
-        
+
         return count;
     }
 

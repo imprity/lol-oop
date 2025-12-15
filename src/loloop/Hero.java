@@ -1,14 +1,14 @@
 package loloop;
 
 public abstract class Hero {
-    public static class BaseStat {
+    public static class Stat {
         public final int maxHealth;
 
-        public final  int defense;
+        public final int defense;
 
         public final int attackDamage;
 
-        public BaseStat(
+        public Stat(
             int maxHealth,
             int defense,
             int attackDamage
@@ -18,8 +18,8 @@ public abstract class Hero {
             this.attackDamage = attackDamage;
         }
 
-        public BaseStat(
-            BaseStat other
+        public Stat(
+            Stat other
         ) {
             this.maxHealth = other.maxHealth;
             this.defense = other.defense;
@@ -27,7 +27,7 @@ public abstract class Hero {
         }
     }
 
-    private BaseStat baseStat;
+    private Stat stat;
     private int health;
 
     private final String name;
@@ -41,15 +41,15 @@ public abstract class Hero {
     private int level = 1;
 
     protected Hero(
-        String name, 
-        Team team, 
+        String name,
+        Team team,
         String lastWords
     ) {
         this.name = name;
         this.team = team;
-        this.baseStat = GameConstants.getBaseStat(this.getClass());
+        this.stat = GameConstants.getBaseStat(this.getClass());
         this.lastWords = lastWords;
-        this.health = baseStat.maxHealth;
+        this.health = stat.maxHealth;
     }
 
     public int getHealth() {
@@ -59,11 +59,11 @@ public abstract class Hero {
     public void takeDamage(int damage) {
         if (this.isDead) {
             System.err.printf("ERROR: %s이(가) 죽은 상태에서 damage를 받앗습니다!\n",
-                    this.teamAndName());
+                this.teamAndName());
             return;
         }
 
-        damage -= baseStat.defense;
+        damage -= stat.defense;
 
         if (damage < 0) {
             damage = 0;
@@ -82,15 +82,15 @@ public abstract class Hero {
     public void getHealed(int healing) {
         if (this.isDead) {
             System.err.printf("ERROR: %s이(가) 죽은 상태에서 healing을 받앗습니다!\n",
-                    this.teamAndName());
+                this.teamAndName());
             return;
         }
 
         System.out.printf("%s이(가) %s 힐링을 받음!\n", this.teamAndName(), healing);
         this.health += healing;
 
-        if (this.health > this.baseStat.maxHealth) {
-            this.health = this.baseStat.maxHealth;
+        if (this.health > this.stat.maxHealth) {
+            this.health = this.stat.maxHealth;
         }
     }
 
@@ -102,20 +102,20 @@ public abstract class Hero {
         int prevLevel = level;
         this.level += 1;
 
-        baseStat = onLevelUp(prevLevel, level, this.baseStat);
+        stat = onLevelUp(prevLevel, level, this.stat);
 
-        if (this.health > baseStat.maxHealth) {
-            this.health = baseStat.maxHealth;
+        if (this.health > stat.maxHealth) {
+            this.health = stat.maxHealth;
         }
     }
 
-    public abstract BaseStat onLevelUp(int prevLevel, int nextLevel, BaseStat prevStat);
+    public abstract Stat onLevelUp(int prevLevel, int nextLevel, Stat prevStat);
 
     public void doAttack(Hero otherHero) {
-        System.out.printf("%s -> %s 기본 공격!\n", 
-                this.teamAndName(), otherHero.teamAndName());
+        System.out.printf("%s -> %s 기본 공격!\n",
+            this.teamAndName(), otherHero.teamAndName());
 
-        otherHero.takeDamage(this.baseStat.attackDamage);
+        otherHero.takeDamage(this.stat.attackDamage);
     }
 
     public final void doQ(Game game) {
@@ -128,11 +128,11 @@ public abstract class Hero {
     @Override
     public String toString() {
         return String.format(
-            "팀:%s, 이름: %s, 체력:%s, level:%s, %s", 
-            this.team, 
-            this.name, 
-            this.health, 
-            this.level, 
+            "팀:%s, 이름: %s, 체력:%s, level:%s, %s",
+            this.team,
+            this.name,
+            this.health,
+            this.level,
             this.isDead() ? "죽음" : "살아있음"
         );
     }

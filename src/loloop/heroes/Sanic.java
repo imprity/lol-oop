@@ -6,7 +6,7 @@ import loloop.Team;
 
 import java.util.Random;
 
-public class Sanic extends Hero{
+public class Sanic extends Hero {
     private final Random rng = new Random();
 
     public Sanic(
@@ -21,22 +21,22 @@ public class Sanic extends Hero{
     }
 
     @Override
-    public BaseStat onLevelUp(int prevLevel, int nextLevel, BaseStat prevStat) {
+    public Stat onLevelUp(int prevLevel, int nextLevel, Stat prevStat) {
         int diff = nextLevel - prevLevel;
-        return new Hero.BaseStat(
-                prevStat.maxHealth + diff * 1,
-                prevStat.defense + diff * 1,
-                prevStat.attackDamage + diff * 1
+        return new Hero.Stat(
+            prevStat.maxHealth + diff * 1,
+            prevStat.defense + diff * 1,
+            prevStat.attackDamage + diff * 1
         );
     }
 
-    private final static String[] sanicActions = new String[] {
+    private final static String[] sanicActions = new String[]{
         "핫도그를 샀습니다!",
         "친구한테 돈을 빌릴려고 합니다!",
         "트위터를 열었습니다!",
     };
 
-    private final static String[] catchPhrases = new String[] {
+    private final static String[] catchPhrases = new String[]{
         "CHILI DOG!!",
         "WAY PAST COOL!!",
         "LET’S JUICE!!!",

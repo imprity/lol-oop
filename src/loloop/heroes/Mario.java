@@ -8,7 +8,7 @@ import loloop.Game;
 import loloop.Hero;
 import loloop.Team;
 
-public class Mario extends Hero{
+public class Mario extends Hero {
     public Mario(
         Team team,
         String name
@@ -21,12 +21,12 @@ public class Mario extends Hero{
     }
 
     @Override
-    public BaseStat onLevelUp(int prevLevel, int nextLevel, BaseStat prevStat) {
+    public Stat onLevelUp(int prevLevel, int nextLevel, Stat prevStat) {
         int diff = nextLevel - prevLevel;
-        return new Hero.BaseStat(
-                prevStat.maxHealth + diff * 20,
-                prevStat.defense + diff * 20,
-                prevStat.attackDamage + diff * 20
+        return new Hero.Stat(
+            prevStat.maxHealth + diff * 20,
+            prevStat.defense + diff * 20,
+            prevStat.attackDamage + diff * 20
         );
     }
 
@@ -36,8 +36,8 @@ public class Mario extends Hero{
 
         Optional<Hero> enemy = game.pickRandomLiveHero(this.team.getOtherTeam());
         if (enemy.isPresent()) {
-            System.out.printf("%s(이)가 %s를(을) 향해 낙하합니다!!\n", 
-                    this.teamAndName(), enemy.get().teamAndName());
+            System.out.printf("%s(이)가 %s를(을) 향해 낙하합니다!!\n",
+                this.teamAndName(), enemy.get().teamAndName());
             enemy.get().takeDamage(Util.divideCeiling(enemy.get().getHealth(), 4));
         }
     }

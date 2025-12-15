@@ -6,7 +6,7 @@ import loloop.Team;
 
 import java.util.List;
 
-public class Garen extends Hero{
+public class Garen extends Hero {
     public Garen(
         Team team,
         String name
@@ -19,12 +19,12 @@ public class Garen extends Hero{
     }
 
     @Override
-    public BaseStat onLevelUp(int prevLevel, int nextLevel, BaseStat prevStat) {
+    public Stat onLevelUp(int prevLevel, int nextLevel, Stat prevStat) {
         int diff = nextLevel - prevLevel;
-        return new Hero.BaseStat(
-                prevStat.maxHealth + diff * 5,
-                prevStat.defense + diff * 5,
-                prevStat.attackDamage + diff * 10
+        return new Hero.Stat(
+            prevStat.maxHealth + diff * 5,
+            prevStat.defense + diff * 5,
+            prevStat.attackDamage + diff * 10
         );
     }
 
