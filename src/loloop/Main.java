@@ -2,6 +2,7 @@ package loloop;
 
 import loloop.heroes.Garen;
 import loloop.heroes.Ashe;
+import loloop.heroes.Sanic;
 
 import java.util.List;
 import java.util.Arrays;
@@ -13,16 +14,16 @@ public class Main {
         // ===============
         List<Hero> redTeam = Arrays.asList(
             new Garen(Team.RED, "잘생긴 가렌"),
+            new Sanic(Team.RED, "잘생긴 Sanic"),
             new Ashe(Team.RED, "잘생긴 애쉬1"),
-            new Ashe(Team.RED, "잘생긴 애쉬2"),
-            new Ashe(Team.RED, "잘생긴 애쉬3")
+            new Ashe(Team.RED, "잘생긴 애쉬2")
         );
 
         List<Hero> blueTeam = Arrays.asList(
             new Ashe(Team.BLUE, "귀요미 애쉬"),
+            new Sanic(Team.BLUE, "귀요미 Sanic"),
             new Garen(Team.BLUE, "귀요미 가렌1"),
-            new Garen(Team.BLUE, "귀요미 가렌2"),
-            new Garen(Team.BLUE, "귀요미 가렌3")
+            new Garen(Team.BLUE, "귀요미 가렌2")
         );
 
         printTeamStat(Team.RED, redTeam);
