@@ -3,6 +3,7 @@ package loloop;
 import loloop.heroes.Garen;
 import loloop.heroes.Ashe;
 import loloop.heroes.Sanic;
+import loloop.heroes.Mario;
 
 import java.util.List;
 import java.util.Arrays;
@@ -15,8 +16,8 @@ public class Main {
         List<Hero> redTeam = Arrays.asList(
             new Garen(Team.RED, "잘생긴 가렌"),
             new Sanic(Team.RED, "잘생긴 Sanic"),
-            new Ashe(Team.RED, "잘생긴 애쉬1"),
-            new Ashe(Team.RED, "잘생긴 애쉬2")
+            new Mario(Team.RED, "잘생긴 마리오"),
+            new Ashe(Team.RED, "잘생긴 애쉬")
         );
 
         List<Hero> blueTeam = Arrays.asList(

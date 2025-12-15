@@ -53,6 +53,10 @@ public abstract class Hero {
         this.health = baseStat.maxHealth;
     }
 
+    public int getHealth() {
+        return this.health;
+    }
+
     public void takeDamage(int damage) {
         if (this.isDead) {
             System.err.printf("ERROR: %s이(가) 죽은 상태에서 damage를 받앗습니다!\n",
@@ -63,7 +67,7 @@ public abstract class Hero {
         damage -= baseStat.defense;
 
         if (damage < 0) {
-            return;
+            damage = 0;
         }
 
         System.out.printf("%s이(가) %s dmg를 받음!\n", this.teamAndName(), damage);
