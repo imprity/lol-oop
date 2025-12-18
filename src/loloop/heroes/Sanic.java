@@ -11,7 +11,7 @@ public class Sanic extends Hero {
     private final Random rng = new Random();
 
     public Sanic(
-        Team team,
+        Team<Hero> team,
         String name
     ) {
         super(

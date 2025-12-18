@@ -1,24 +1,47 @@
 package loloop;
 
-public enum Team {
-    RED("빨강"),
-    BLUE("파랑");
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 
-    public final String name;
+public class Team<T extends Hero> {
+    private final List<T> teamMembers;
 
-    Team(String name) {
+    private static int idCounter = 1;
+
+    private final int id;
+
+    private final String name;
+
+    public Team(String name) {
+        this.teamMembers = new ArrayList<>();
+        this.id = Team.idCounter;
         this.name = name;
+
+        Team.idCounter++;
     }
 
-    public Team getOtherTeam() {
-        if (this == RED) {
-            return BLUE;
-        }
-        return RED;
+    public Team(String name, List<T> teamMembers) {
+        this.teamMembers = teamMembers;
+        this.id = Team.idCounter;
+        this.name = name;
+
+        Team.idCounter++;
     }
 
-    @Override
-    public String toString() {
+    public void addTeamMembers(List<T> teamMembers) {
+        this.teamMembers.addAll(teamMembers);
+    }
+
+    List<T> view() {
+        return Collections.unmodifiableList(this.teamMembers);
+    }
+
+    int getId() {
+        return this.id;
+    }
+
+    String getName() {
         return this.name;
     }
 }

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class Ashe extends Hero {
     public Ashe(
-        Team team,
+        Team<Hero> team,
         String name
     ) {
         super(
@@ -34,18 +34,14 @@ public class Ashe extends Hero {
     @Override
     public void doQImpl(Game game) {
         System.out.println("힐링 타임!!");
-        Team myTeam = Team.RED;
-        if (myTeam != team) {
-            myTeam = Team.BLUE;
-        }
 
-        Optional<Hero> friend = game.pickRandomLiveHero(myTeam);
+        Optional<Hero> friend = game.pickRandomLiveHero(team);
 
         if (friend.isPresent()) {
             friend.get().getHealed(10);
         }
 
-        friend = game.pickRandomDeadHero(myTeam);
+        friend = game.pickRandomDeadHero(team);
         if (friend.isPresent()) {
             friend.get().resurrect();
         }

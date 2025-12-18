@@ -35,7 +35,7 @@ public abstract class Hero {
 
     private final String name;
 
-    public final Team team;
+    public final Team<Hero> team;
 
     private final String lastWords;
 
@@ -45,7 +45,7 @@ public abstract class Hero {
 
     protected Hero(
         String name,
-        Team team,
+        Team<Hero> team,
         String lastWords
     ) {
         this.name = name;
@@ -161,17 +161,17 @@ public abstract class Hero {
     public String toString() {
         return String.format(
             "팀:%s, 이름: %s, 체력:%s, level:%s, 배틀횟수: %s, %s",
-            this.team,
+            this.team.getName(),
             this.name,
             this.health,
             this.level,
-            this.battleCounter,
+            this.getBattleCount(),
             this.isDead() ? "죽음" : "살아있음"
         );
     }
 
     public String teamAndName() {
-        return String.format("%s팀 %s", this.team, this.name);
+        return String.format("%s팀 %s", this.team.getName(), this.name);
     }
 }
 

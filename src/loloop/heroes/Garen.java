@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Garen extends Hero {
     public Garen(
-        Team team,
+        Team<Hero> team,
         String name
     ) {
         super(
@@ -34,7 +34,7 @@ public class Garen extends Hero {
     @Override
     public void doQImpl(Game game) {
         System.out.println("소용돌이 빔!!");
-        Team otherTeam = this.team.getOtherTeam();
+        Team<Hero> otherTeam = game.getOtherTeam(this.team);
 
         List<Hero> otherTeamHeroes = game.getLiveHeroes(otherTeam);
 

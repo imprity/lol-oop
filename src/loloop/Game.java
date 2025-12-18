@@ -10,35 +10,33 @@ import java.util.Collections;
 public class Game {
     private final Random rng = new Random();
 
-    private final List<Hero> redTeam;
-    private final List<Hero> blueTeam;
+    private final Team<Hero> redTeam;
+    private final Team<Hero> blueTeam;
 
     public Game(
-        List<Hero> redTeam,
-        List<Hero> blueTeam
+        Team<Hero> redTeam,
+        Team<Hero> blueTeam
     ) {
         this.redTeam = redTeam;
         this.blueTeam = blueTeam;
     }
 
-    public List<Hero> getLiveHeroes(Team team) {
-        List<Hero> heroes = redTeam;
-        if (team == Team.BLUE) {
+    public Team<Hero> getOtherTeam(Team<Hero> team) {
+        Team<Hero> heroes = redTeam;
+        if (team.getId() == redTeam.getId()) {
             heroes = this.blueTeam;
         }
-
-        return heroes.stream().filter(x -> !x.isDead()).collect(Collectors.toList());
+        return heroes;
     }
 
-    private Optional<Hero> pickRandomLiveOrDeadHero(Team team, boolean pickAlive) {
-        List<Hero> heroes = redTeam;
-        if (team == Team.BLUE) {
-            heroes = this.blueTeam;
-        }
+    public List<Hero> getLiveHeroes(Team<Hero> team) {
+        return team.view().stream().filter(x -> !x.isDead()).collect(Collectors.toList());
+    }
 
+    private Optional<Hero> pickRandomLiveOrDeadHero(Team<Hero> team, boolean pickAlive) {
         int pickedHeroes = 0;
 
-        for (final Hero hero : heroes) {
+        for (final Hero hero : team.view()) {
             boolean pickable = hero.isDead();
             if (pickAlive) {
                 pickable = !pickable;
@@ -55,7 +53,7 @@ public class Game {
 
         int pickIndex = rng.nextInt(pickedHeroes);
 
-        for (final Hero hero : heroes) {
+        for (final Hero hero : team.view()) {
             boolean pickable = hero.isDead();
             if (pickAlive) {
                 pickable = !pickable;
@@ -72,39 +70,26 @@ public class Game {
 
         assert false; // SHOULD NEVER HAPPEN
 
-        return Optional.ofNullable(null);
+        return Optional.empty();
     }
 
-    public Optional<Hero> pickRandomLiveHero(Team team) {
+    public Optional<Hero> pickRandomLiveHero(Team<Hero> team) {
         return pickRandomLiveOrDeadHero(team, true);
     }
 
-    public Optional<Hero> pickRandomDeadHero(Team team) {
+    public Optional<Hero> pickRandomDeadHero(Team<Hero> team) {
         return pickRandomLiveOrDeadHero(team, false);
     }
 
-    public int getLiveHeroesCount(Team team) {
-        List<Hero> heroes = redTeam;
-        if (team == Team.BLUE) {
-            heroes = this.blueTeam;
-        }
-
-        int count = 0;
-
-        for (Hero hero : heroes) {
-            if (!hero.isDead()) {
-                count++;
-            }
-        }
-
-        return count;
+    public int getLiveHeroesCount(Team<Hero> team) {
+        return (int) team.view().stream().filter(hero -> !hero.isDead()).count();
     }
 
     public void doTurn() {
         List<Hero> heroes = new ArrayList<>();
 
-        heroes.addAll(redTeam);
-        heroes.addAll(blueTeam);
+        heroes.addAll(redTeam.view());
+        heroes.addAll(blueTeam.view());
 
         Collections.shuffle(heroes);
 
@@ -117,10 +102,7 @@ public class Game {
 
             if (rng.nextInt(100) < 70) {
                 // 기본 공격 실행
-                Team otherTeam = Team.RED;
-                if (otherTeam == hero.team) {
-                    otherTeam = Team.BLUE;
-                }
+                Team<Hero> otherTeam = getOtherTeam(hero.team);
 
                 Optional<Hero> otherHero = pickRandomLiveHero(otherTeam);
                 if (otherHero.isPresent()) {

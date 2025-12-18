@@ -11,7 +11,7 @@ import loloop.Team;
 
 public class Mario extends Hero {
     public Mario(
-        Team team,
+        Team<Hero> team,
         String name
     ) {
         super(
@@ -36,7 +36,7 @@ public class Mario extends Hero {
     public void doQImpl(Game game) {
         System.out.printf("%s(이)가 100M 상공으로 점프를 했습니다!!\n", this.teamAndName());
 
-        Optional<Hero> enemy = game.pickRandomLiveHero(this.team.getOtherTeam());
+        Optional<Hero> enemy = game.pickRandomLiveHero(game.getOtherTeam(team));
         if (enemy.isPresent()) {
             System.out.printf("%s(이)가 %s를(을) 향해 낙하합니다!!\n",
                 this.teamAndName(), enemy.get().teamAndName());

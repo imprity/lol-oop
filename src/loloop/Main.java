@@ -13,22 +13,30 @@ public class Main {
         // ===============
         // hero 생성
         // ===============
-        List<Hero> redTeam = Arrays.asList(
-            new Garen(Team.RED, "잘생긴 가렌"),
-            new Sanic(Team.RED, "잘생긴 Sanic"),
-            new Mario(Team.RED, "잘생긴 마리오"),
-            new Ashe(Team.RED, "잘생긴 애쉬")
-        );
+        Team<Hero> redTeam = new Team<>("빨강");
+        Team<Hero> blueTeam = new Team<>("파랑");
 
-        List<Hero> blueTeam = Arrays.asList(
-            new Ashe(Team.BLUE, "귀요미 애쉬"),
-            new Sanic(Team.BLUE, "귀요미 Sanic"),
-            new Garen(Team.BLUE, "귀요미 가렌1"),
-            new Garen(Team.BLUE, "귀요미 가렌2")
-        );
+        {
+            List<Hero> redTeamList = Arrays.asList(
+                new Garen(redTeam, "잘생긴 가렌"),
+                new Sanic(redTeam, "잘생긴 Sanic"),
+                new Mario(redTeam, "잘생긴 마리오"),
+                new Ashe(redTeam, "잘생긴 애쉬")
+            );
 
-        printTeamStat(Team.RED, redTeam);
-        printTeamStat(Team.BLUE, blueTeam);
+            List<Hero> blueTeamList = Arrays.asList(
+                new Ashe(blueTeam, "귀요미 애쉬"),
+                new Sanic(blueTeam, "귀요미 Sanic"),
+                new Garen(blueTeam, "귀요미 가렌1"),
+                new Garen(blueTeam, "귀요미 가렌2")
+            );
+
+            redTeam.addTeamMembers(redTeamList);
+            blueTeam.addTeamMembers(blueTeamList);
+        }
+
+        printTeamStat(redTeam);
+        printTeamStat(blueTeam);
 
         // =====================
         // 배너 출력
@@ -53,13 +61,13 @@ public class Main {
             System.out.println("====================== 턴 종료 =======================");
             System.out.println();
 
-            if (game.getLiveHeroesCount(Team.RED) == 0) {
-                System.out.printf("%s 팀 승리\n", Team.BLUE);
+            if (game.getLiveHeroesCount(redTeam) == 0) {
+                System.out.printf("%s 팀 승리\n", blueTeam.getName());
                 break;
             }
 
-            if (game.getLiveHeroesCount(Team.BLUE) == 0) {
-                System.out.printf("%s 팀 승리\n", Team.RED);
+            if (game.getLiveHeroesCount(blueTeam) == 0) {
+                System.out.printf("%s 팀 승리\n", redTeam.getName());
                 break;
             }
         }
@@ -67,15 +75,15 @@ public class Main {
         System.out.println("[ 전투 종료 ]");
         System.out.println("[ 전투 결과 ]");
 
-        printTeamStat(Team.RED, redTeam);
-        printTeamStat(Team.BLUE, blueTeam);
+        printTeamStat(redTeam);
+        printTeamStat(blueTeam);
 
         System.out.printf("\n총 배틀 횟수 : %s\n", Hero.getGlobalBattleCount());
     }
 
-    private static void printTeamStat(Team team, List<Hero> teamHeroes) {
-        System.out.printf("\n[ %s팀 ]\n\n", team);
-        for (Hero hero : teamHeroes) {
+    private static void printTeamStat(Team<Hero> team) {
+        System.out.printf("\n[ %s팀 ]\n\n", team.getName());
+        for (Hero hero : team.view()) {
             System.out.println(hero);
         }
     }
